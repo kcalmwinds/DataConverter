@@ -26,7 +26,7 @@ p = pages
 k = kilobytes
 m = megabytes
 g = gigabyte
-t = Terabyte
+t = terabyte
 
 q = quit
 ''')
