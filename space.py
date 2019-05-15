@@ -16,7 +16,7 @@ def convert_this(a):
         for i in range(len(a[1:])) :
             a[i + 1] = float(a[i + 1])
     except:
-        return 'use only numbers after first argument. First Argument in {}'.format(options)
+        return 'Use only numbers after first argument. First Argument in {}'.format(options)
 
     if a[0] not in options:
         return ('''Format your input:  Input_type num num num ...
@@ -67,23 +67,23 @@ q = quit
             
             
         return '''pages = {}
-kb = {}
-mb = {}
-gb = {}
-tb = {}
+KB = {}
+MB = {}
+GB = {}
+TB = {}
 '''.format(p, k, m, g, t)
 
 
 if __name__ == '__main__':
     x = True
     while x == True:
-        a = input('list of numbers to convert >> ').strip().lower().split()
+        a = input('List of numbers to convert >> ').strip().lower().split()
         if convert_this(a) == False:
             x = False
             print('Exiting...')
         else:
             print(convert_this(a))
 
-            #test line p 57600000 64026624 6400000
+
 
 
