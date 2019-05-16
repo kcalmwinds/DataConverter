@@ -1,5 +1,8 @@
 # DataConverter
-I needed a tool that would convert data sizes.  It was a good candidate to put up
+I needed a tool that would convert data sizes.  It was a good candidate to put up.
+
+
+added the zip file from pyinstaller for space.py.  Working EXE inside.
 
 # Usage
 
