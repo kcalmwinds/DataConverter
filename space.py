@@ -1,10 +1,34 @@
 def convert_this(a):
-    options = ['p', 'k', 'm', 'g', 'q', 't']
+    options = ['p', 'k', 'm', 'g', 'q', 't', 'help']
     p = 0
     k = 0
     m = 0
     g = 0
     t = 0
+    helptxt = '''
+Format your input:  Input_type num num num ...
+Input_Types
+-----------
+p = pages
+k = kilobytes
+m = megabytes
+g = gigabyte
+t = terabyte
+
+q = quit
+help = help
+
+SYNTAX :
+p 100
+this will return pages, KB, MB, GB, TB for pages
+
+m 100 200 500
+this sums 100, 200, and 500 then return pages, KB, MB, GB, TB for Megabytes
+
+q to quit
+
+help will show this message again.
+'''
 
     if len(a) == 0:
         a = ['p', p]
@@ -29,6 +53,7 @@ g = gigabyte
 t = terabyte
 
 q = quit
+help = help
 ''')
     else:
         if a[0] == 'p':
@@ -63,10 +88,12 @@ q = quit
             p = k / 8
         elif a[0] == 'q':
             return False
+        elif a[0] == 'help':
+            return helptxt
 
             
             
-        return '''pages = {}
+        return '''Pages = {}
 KB = {}
 MB = {}
 GB = {}
@@ -76,6 +103,7 @@ TB = {}
 
 if __name__ == '__main__':
     x = True
+    print("For Help - type help")
     while x == True:
         a = input('List of numbers to convert >> ').strip().lower().split()
         if convert_this(a) == False:
@@ -83,7 +111,6 @@ if __name__ == '__main__':
             print('Exiting...')
         else:
             print(convert_this(a))
-
 
 
 
