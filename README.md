@@ -1,9 +1,6 @@
 # DataConverter
 I needed a tool that would convert data sizes.  It was a good candidate to put up.
 
-
-added the zip file from pyinstaller for space.py.  Working EXE inside.
-
 # Usage
 
 First arguement will always be what the current data size level is in:
@@ -12,6 +9,7 @@ First arguement will always be what the current data size level is in:
     mb = m
     gb = g
     tb = t
+    pb = pb
     
  any number values after that will be summed, then output to 4 conversions + the current data size level
  
