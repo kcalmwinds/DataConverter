@@ -1,6 +1,6 @@
 import functools
 
-_VALID_COMMANDS = frozenset({"b", "p", "k", "m", "g", "t", "pb", "help", "quit"})
+_VALID_COMMANDS = frozenset({"b", "p", "k", "m", "g", "t", "pb", "help"})
 
 
 def b_to_pages(num, *, reverse=False, power=-1):
@@ -14,7 +14,26 @@ for power, scale in enumerate(["k", "m", "g", "t", "pb"]):
 del power, scale
 
 
-class DataConvert:
+class ByteSize:
+    """Format your input:
+    Input_type num num num Input_type num num num...
+
+    Input_Types
+    -----------
+    p = pages
+    k = kilobytes
+    m = megabytes
+    g = gigabyte
+    t = terabyte
+    pb = petabyte
+
+
+
+
+        Returns:
+            [dict]: [Contains input_types : Float pairing of byte sizes]
+    """
+
     def __init__(self, data, valid_args):
         self.prep = {"p": []}
         self.pages = 0
@@ -23,21 +42,7 @@ class DataConvert:
 
     # data cleaning
     def is_help(self):
-        if "help" in self.prep.keys():
-            return """Format your input:  
-Input_type num num num Input_type num num num...
-
-Input_Types
------------
-p = pages
-k = kilobytes
-m = megabytes
-g = gigabyte
-t = terabyte
-
-quit = quit
-help = help
-"""
+        return
 
     def is_quit(self):
         return False
@@ -54,22 +59,17 @@ help = help
             if type(x) == str:
                 if x.lower() in self.valid:
                     hold = x.lower()
-                    if hold == "quit":
-                        return self.is_quit()
-                    elif hold == "help":
-                        print(self.is_help())
-                        return 1, "Restarting"
-                    elif hold not in self.prep.keys():
+                    if hold not in self.prep.keys():
                         self.prep[hold] = []
             elif type(x) == float:
                 self.prep[hold].append(
                     x
                 )  # hold comes from a previous iteration of the loop
             else:
-                return 0, "Invalid input."
+                print("Invalid input.")
         detect_zeros = self.detect_zero_sum()
         if detect_zeros is not None:
-            return detect_zeros
+            return 1, detect_zeros
 
     def sum_input(self):
         for k in self.prep.keys():
@@ -127,9 +127,16 @@ Petabytes : {data['pb']}
 
 
 def main():
-    formatted_data = format_data(request_data())
-    a = DataConvert(formatted_data, _VALID_COMMANDS)
-    print(data_to_str(a.results()))
+    try:
+        formatted_data = format_data(request_data())
+        a = ByteSize(formatted_data, _VALID_COMMANDS)
+        print(data_to_str(a.results()))
+    except TypeError as e:
+        print(e)
+        print("This might be due to invalid input")
+    except UnboundLocalError as e:
+        print(e)
+        print("You may have started with a number instead of a bytesize")
 
 
 if __name__ == "__main__":
