@@ -1,6 +1,6 @@
 import functools
 
-_VALID_COMMANDS = frozenset({"b", "p", "k", "m", "g", "t", "pb", "help"})
+_VALID_COMMANDS = frozenset({"b", "p", "k", "m", "g", "t", "pb"})
 
 
 def b_to_pages(num, *, reverse=False, power=-1):
@@ -15,7 +15,8 @@ del power, scale
 
 
 class ByteSize:
-    """Format your input:
+    """Format your input as a list of strings:
+
     Input_type num num num Input_type num num num...
 
     Input_Types
