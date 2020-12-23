@@ -14,7 +14,7 @@ for power, scale in enumerate(["k", "m", "g", "t", "pb"]):
 del power, scale
 
 
-class ByteSize:
+class ByteSized:
     """Format your input as a list of strings:
 
     Input_type num num num Input_type num num num...
@@ -28,25 +28,30 @@ class ByteSize:
     t = terabyte
     pb = petabyte
 
-
-
-
         Returns:
-            [dict]: [Contains input_types : Float pairing of byte sizes]
+            dict: Contains input_types : Float pairing of byte sizes
     """
 
-    def __init__(self, data, valid_args):
+    def __init__(self, data):
+        """Setting this up needs valid byte sizes. We declared that above at the top of the file with _VALID_COMMANDS
+        the conversions dict should update as you add in more to the scale variable.
+
+        Args:
+            data (List): This should be a list of strings starting with something from _VALID_COMMANDS followed by numbers formatted as strings
+            valid_args (frozenset): This is declared at the top of this document and should be passed in
+        """
         self.prep = {"p": []}
         self.pages = 0
-        self.data = data
-        self.valid = valid_args
+        self.data = self.format_data(data)
 
     # data cleaning
-    def is_help(self):
-        return
-
-    def is_quit(self):
-        return False
+    def format_data(self, data):
+        try:
+            return [
+                x if x.lower() in _VALID_COMMANDS else float(x) for x in data.split()
+            ]
+        except ValueError:
+            print("Invalid input")
 
     def detect_zero_sum(self):
         for k, v in self.prep.items():
@@ -58,7 +63,7 @@ class ByteSize:
     def validate_input(self):
         for x in self.data:
             if type(x) == str:
-                if x.lower() in self.valid:
+                if x.lower() in _VALID_COMMANDS:
                     hold = x.lower()
                     if hold not in self.prep.keys():
                         self.prep[hold] = []
@@ -93,52 +98,16 @@ class ByteSize:
             self.prep[k] = convert(self.prep["p"], reverse=True)
 
     def results(self):
-        self.validate_input()
-        self.sum_input()
-        self.convert_to_pages()
-        self.add_to_pages()
-        self.recalculate_values()
-        return self.prep
-
-
-def request_data():
-    return input('Please enter values or type "help" for help\n')
-
-
-def format_data(data):
-    try:
-        return [x if x.lower() in _VALID_COMMANDS else float(x) for x in data.split()]
-    except ValueError:
-        print("Invalid input")
-
-
-def data_to_str(data):
-    return f"""
-Results
-============
-Bytes : {data['b']}
-Pages : {data['p']}
-Kilobytes : {data['k']}
-Megabytes : {data['m']}
-Gigabytes : {data['g']}
-Terabytes : {data['t']}
-Petabytes : {data['pb']}
-
-"""
-
-
-def main():
-    try:
-        formatted_data = format_data(request_data())
-        a = ByteSize(formatted_data, _VALID_COMMANDS)
-        print(data_to_str(a.results()))
-    except TypeError as e:
-        print(e)
-        print("This might be due to invalid input")
-    except UnboundLocalError as e:
-        print(e)
-        print("You may have started with a number instead of a bytesize")
-
-
-if __name__ == "__main__":
-    main()
+        try:
+            self.validate_input()
+            self.sum_input()
+            self.convert_to_pages()
+            self.add_to_pages()
+            self.recalculate_values()
+            return self.prep
+        except TypeError as e:
+            print(e)
+            print("This might be due to invalid input")
+        except UnboundLocalError as e:
+            print(e)
+            print("You may have started with a number instead of a bytesize")
