@@ -1,6 +1,10 @@
 # DataConverter
 I needed a tool that would convert data sizes.  It was a good candidate to put up.
 
+# Details
+
+Give this tool a string with space separated values and it will return the byte size conversions from bytes to petabytes.
+
 # Usage
 
 First arguement will always be what the current data size level is in:
@@ -41,7 +45,18 @@ Terabytes : 1024.415417144075
 Petabytes : 1.0004056808047608
 
 
+# todo
 
+Ducktype for:
+
+string - space separated
+string - comma separated
+dictionary
+tuple
+list
+
+The return type of this tool is always a dict so you can pick which or all byte value types.
+this allows the appliation to choose what values to collect and use.
 
 
  
